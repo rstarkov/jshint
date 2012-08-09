@@ -310,6 +310,7 @@ var JSHINT = (function () {
             unused      : true, // if variables should be always used
             scripturl   : true, // if script-targeted URLs should be tolerated
             shadow      : true, // if variable shadowing should be tolerated
+            shutup      : true, // makes JsLint shut up about a specified scope
             smarttabs   : true, // if smarttabs should be tolerated
                                 // (http://www.emacswiki.org/emacs/SmartTabs)
             strict      : true, // require the "use strict"; pragma
@@ -958,6 +959,8 @@ var JSHINT = (function () {
     }
 
     function warning(m, t, a, b, c, d) {
+        if (option.shutup)
+            return;
         var ch, l, w;
         t = t || nexttoken;
         if (t.id === "(end)") {  // `~
