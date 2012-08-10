@@ -4370,6 +4370,12 @@ loop:   for (;;) {
                 if (key === "undefined")
                     return;
 
+                // _unused* is a special case for unused arguments in functions passed
+                // to third-party APIs and thus requiring specific signatures.
+
+                if (type === "unused" && key.lastIndexOf("_unused", 0) === 0)
+                    return;
+
                 if (type !== "unused" && type !== "unction")
                     return;
 
