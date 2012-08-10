@@ -280,6 +280,7 @@ var JSHINT = (function () {
             latedef     : true, // if the use before definition should not be tolerated
             laxbreak    : true, // if line breaks should not be checked
             laxcomma    : true, // if line breaks should not be checked around commas
+            laxlatedef  : true, // if using functions before they are declared should be tolerated
             loopfunc    : true, // if functions should be allowed to be defined within
                                 // loops
             mootools    : true, // if MooTools globals should be predefined
@@ -1755,7 +1756,7 @@ klass:                                  do {
         // Define t in the current function in the current scope.
         if (is_own(funct, t) && !funct["(global)"]) {
             if (funct[t] === true) {
-                if (option.latedef)
+                if (option.latedef && !(option.laxlatedef && type === "unction"))
                     warning("'{a}' was used before it was defined.", nexttoken, t);
             } else {
                 if (!option.shadow && type !== "exception")
@@ -1772,7 +1773,7 @@ klass:                                  do {
         if (funct["(global)"]) {
             global[t] = funct;
             if (is_own(implied, t)) {
-                if (option.latedef)
+                if (option.latedef && !(option.laxlatedef && type === "unction"))
                     warning("'{a}' was used before it was defined.", nexttoken, t);
                 delete implied[t];
             }
